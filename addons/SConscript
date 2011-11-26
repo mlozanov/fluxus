@@ -14,7 +14,7 @@ file.close()
 
 BinaryModulesLocation = CollectsInstall + "/compiled/native/"+archpath
 
-SConscript(dirs = env.Split("video artkp"),
+SConscript(dirs = env.Split(""),
 		exports = ["env", "CollectsInstall", "DataInstall", "BinaryModulesLocation",
 			"MZDYN", "static_modules", "racket_framework"])
 
