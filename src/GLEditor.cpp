@@ -815,8 +815,8 @@ handle_keys:
 				break;
 				case GLEDITOR_TAB: // tab
 				{
-					m_Text.insert(m_Position,L"    ");
-					m_Position+=4;
+					m_Text.insert(m_Position,L"  ");
+					m_Position+=2;
 				}
 				break;
 				//case 172: break; // ignore ¬
