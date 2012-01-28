@@ -16,3 +16,9 @@ helpmap.scm
 moc_*.cc
 *.pyc
 fluxus.xcodeproj/
+docs/en/
+docs/fr/
+docs/pt/
+docs/*.txt
+docs/index.html
+
