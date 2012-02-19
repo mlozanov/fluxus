@@ -104,7 +104,7 @@ if env['PLATFORM'] == 'win32':
 if env['PLATFORM'] == 'darwin':
 	env.Append(CCFLAGS = ' -arch i386 ')
 	env.Append(LINKFLAGS = ' -arch i386 ')
-	env.Append(FRAMEWORKPATH = '/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/')
+	env.Append(FRAMEWORKPATH = '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/')
 	if os.path.exists('/opt/local/lib'):
 		# macports
 		IncludePaths += ['/opt/local/include', '/opt/local/include/freetype2']
