@@ -1,2 +1,2 @@
 #!/bin/sh
-jackd -d coreaudio -m -C
+jackd -d coreaudio  -C

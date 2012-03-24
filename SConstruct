@@ -25,7 +25,7 @@ if sys.platform == 'darwin':
 	file = os.popen('dirname "`which racket`"')
 	RacketBin = file.read()
 	file.close()
-	Prefix = ARGUMENTS.get('Prefix','/opt/local')
+	Prefix = ARGUMENTS.get('Prefix','/usr/local')
 	RacketPrefix = ARGUMENTS.get('RacketPrefix', RacketBin[:-5])
 	RacketInclude = ARGUMENTS.get('RacketInclude', RacketPrefix + "/include")
 	RacketLib = ARGUMENTS.get('RacketLib', RacketPrefix + "/lib")
@@ -77,12 +77,15 @@ LibPaths     = [
         RacketLib,
         RacketLib+"/..",
         "/usr/lib",
+		"/usr/local/lib",
+		"/opt/local/lib",
         "../../libfluxus"]
 
 IncludePaths = [
-        "/usr/local/include",
         "/usr/include",
-        "/usr/local/include/freetype2",  # arg - freetype needs to be
+        "/usr/local/include",
+        "/opt/local/include",
+        "/usr/X11/include/freetype2",  # arg - freetype needs to be
         "/usr/include/freetype2",        # on the include path :(
         RacketInclude,
         "../../libfluxus/src"]
@@ -105,14 +108,8 @@ if env['PLATFORM'] == 'darwin':
 	env.Append(CCFLAGS = ' -arch i386 ')
 	env.Append(LINKFLAGS = ' -arch i386 ')
 	env.Append(FRAMEWORKPATH = '/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/')
-	if os.path.exists('/opt/local/lib'):
-		# macports
-		IncludePaths += ['/opt/local/include', '/opt/local/include/freetype2']
-		LibPaths += ['/opt/local/lib']
-	else:
-		# homebrew
-		IncludePaths += ['/usr/X11/include', '/usr/X11/include/freetype2']
-		LibPaths += ['/usr/X11/lib']
+	IncludePaths += ['/usr/local/include', '/opt/local/include', '/usr/X11/include', '/usr/X11/include/freetype2']
+	LibPaths += ['/usr/local/lib', '/opt/local/lib', '/usr/X11/lib']
 
 env.Append(CPPPATH = IncludePaths)
 env.Append(LIBPATH = LibPaths)
@@ -185,16 +182,16 @@ LibList = [["m", "math.h"],
 			["dl", "stdio.h"],
 			["jpeg", ["stdio.h", "stdlib.h", "jpeglib.h"]],
 			["tiff", "tiff.h"],
-			["freetype", "ft2build.h"],
 			["z", "zlib.h"],
 			["bz2", "bzlib.h"],
 			["png", "png.h"],
-			["ode", "ode/ode.h"],
 			["sndfile", "sndfile.h"],
 			["fftw3", "fftw3.h"],
 			["lo", "lo/lo.h"],
 			["GLEW", "GL/glew.h"],
+			["freetype", "ft2build.h"],
 			["racket3m", "scheme.h"],
+			["ode", "ode/ode.h"],
 			["jack", "jack/jack.h"]]
 
 if env['PLATFORM'] == 'win32':
