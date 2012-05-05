@@ -79,6 +79,49 @@ PData *AddOperator::Operate(TypedPData<dVector> *a, TypedPData<dVector> *b)
 	return NULL;
 }
 
+template <>
+PData *AddOperator::Operate(TypedPData<dColour> *a, float b)
+{
+	for (vector<dColour,FLX_ALLOC(dColour) >::iterator i=a->m_Data.begin(); i!=a->m_Data.end(); i++)
+	{
+		i->r+=b;
+		i->g+=b;
+		i->b+=b;
+	}
+	return NULL;
+}
+
+template <>
+PData *AddOperator::Operate(TypedPData<dColour> *c, TypedPData<float> *d)
+{
+	for (unsigned int i=0; i<c->Size(); i++)
+	{
+		c->m_Data[i].r+=d->m_Data[i];
+		c->m_Data[i].g+=d->m_Data[i];
+		c->m_Data[i].b+=d->m_Data[i];
+	}
+	return NULL;
+}
+
+template <>
+PData *AddOperator::Operate(TypedPData<dColour> *c, dColour d)
+{
+	for (vector<dColour,FLX_ALLOC(dColour) >::iterator i=c->m_Data.begin(); i!=c->m_Data.end(); i++)
+	{
+		i->r+=d.r;
+		i->g+=d.g;
+		i->b+=d.b;
+		i->a+=d.a;
+	}
+	return NULL;
+}
+
+template <>
+PData *AddOperator::Operate(TypedPData<dColour> *c, TypedPData<dColour> *d)
+{
+	for (unsigned int i=0; i<c->Size(); i++) c->m_Data[i]+=d->m_Data[i];
+	return NULL;
+}
 ////////////////////////////////////////////////////////////////////////////
 
 template <>
