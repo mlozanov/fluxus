@@ -303,15 +303,15 @@ if not GetOption('clean'):
 	if static_modules:
 		# in static mode, we want to embed all of plt we need
 		# using popen as it's crossplatform 
-		raco_status = os.popen("raco ctool --c-mods src/base.c \
-			++lib racket/base  \
-			++lib racket/base/lang/reader  \
-			++lib xml/xml \
-			++lib compiler \
-			++lib mzscheme \
-			++lib mzlib/string \
-			++lib setup   \
-			++lib config").close()
+		raco_status = subprocess.call(['raco', 'ctool', '--c-mods', 'src/base.c',
+			'++lib', 'racket/base',
+			'++lib', 'racket/base/lang/reader',
+			'++lib', 'xml/xml',
+			'++lib', 'compiler',
+			'++lib', 'mzscheme',
+			'++lib', 'mzlib/string',
+			'++lib', 'setup',
+			'++lib', 'config'])
 	else:
 		raco_status = subprocess.call(['raco', 'ctool', '--c-mods', 'src/base.c', '++lib', 'racket/base'])
 
@@ -363,7 +363,7 @@ if not GetOption('clean') and static_modules:
 	
 		# now go through the rest of the libs, removing them from 
 		# the environment at the same time
-		for i in " GLEW GLU glut asound m fftw3 mzscheme3m png tiff \
+		for i in " GLEW GLU glut asound m fftw3 racket3m png tiff \
 					jpeg freetype lo z ".split():
 			app_env['LIBS'].remove(i)
 			linkcom+="-l"+i+" "
@@ -375,9 +375,9 @@ if not GetOption('clean') and static_modules:
 		if env['PLATFORM'] == 'win32':
 			app_env['LIBS'].remove('libmzsch3m_6ncc9s')
 		else:
-			app_env['LIBS'].remove('mzscheme3m')
+			app_env['LIBS'].remove('racket3m')
 
-		app_env.Append(LINKCOM = ' -Wl,-Bstatic -lmzscheme3m -Wl,-Bdynamic')
+		app_env.Append(LINKCOM = ' -Wl,-Bstatic -lracket3m -Wl,-Bdynamic -lffi')
 		
 		# have to add the libs needed by the fluxus modules here
 		app_env.Append(LIBS = ["fluxus"])
